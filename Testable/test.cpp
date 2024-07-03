@@ -4,38 +4,59 @@
 #include <string>
 using namespace std;
 
-TEST(TsSimilarity, TcCheck1LengthIsEmptyBoth)
+class SimCheckFixture : public testing::Test
 {
+private:
     SimilarityChecker sc;
-    EXPECT_EQ(sc.Check1_Length("", ""), 60);
+public:
+    void SetCheckTarget(string A, string B)
+    {
+        sc.SetCheckTarget(A, B);
+    }
+    void Check1LengthIsExpectedTo(int Expected)
+    {
+        EXPECT_EQ(sc.Check1_Length(), Expected);
+    }
+};
+
+TEST_F(SimCheckFixture, TcCheck1LengthIsEmptyBoth)
+{
+    SetCheckTarget("", "");
+    Check1LengthIsExpectedTo(60);
 }
 
-TEST(TsSimilarity, TcCheck1LengthIsEmpty1)
+TEST_F(SimCheckFixture, TcCheck1LengthIsEmpty1)
 {
-    SimilarityChecker sc;
-    EXPECT_EQ(sc.Check1_Length("ABC", ""), 0);
+    SetCheckTarget("ABC", "");
+    Check1LengthIsExpectedTo(0);
 }
 
-TEST(TsSimilarity, TcCheck1LengthIsDiff1)
+TEST_F(SimCheckFixture, TcCheck1LengthIsDiff1)
 {
-    SimilarityChecker sc;
-    EXPECT_EQ(sc.Check1_Length("ABC", "A"), 0);
+    SetCheckTarget("ABC", "A");
+    Check1LengthIsExpectedTo(0);
 }
 
-TEST(TsSimilarity, TcCheck1LengthIsDiff2)
+TEST_F(SimCheckFixture, TcCheck1LengthIsDiff2)
 {
-    SimilarityChecker sc;
-    EXPECT_EQ(sc.Check1_Length("ABC", "AB"), 30);
+    SetCheckTarget("ABC", "AB");
+    Check1LengthIsExpectedTo(30);
 }
 
-TEST(TsSimilarity, TcCheck1LengthIsDiff3)
+TEST_F(SimCheckFixture, TcCheck1LengthIsDiff3)
 {
-    SimilarityChecker sc;
-    EXPECT_EQ(sc.Check1_Length("ABC", "ABCDE"), 20);
+    SetCheckTarget("ABC", "ABCDE");
+    Check1LengthIsExpectedTo(20);
 }
 
-TEST(TsSimilarity, TcCheck1LengthIsDiff4)
+TEST_F(SimCheckFixture, TcCheck1LengthIsDiff4)
 {
-    SimilarityChecker sc;
-    EXPECT_EQ(sc.Check1_Length("ABCEFGHIJKLMN", "ABCDEFGHIJKL"), 55);
+    SetCheckTarget("ABCEFGHIJKLMN", "ABCDEFGHIJKL");
+    Check1LengthIsExpectedTo(55);
+}
+
+TEST_F(SimCheckFixture, TcCheck1LengthIsSame)
+{
+    SetCheckTarget("ZSDFASGRSRG", "ABCDFGHIJKL");
+    Check1LengthIsExpectedTo(60);
 }

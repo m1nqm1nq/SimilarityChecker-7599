@@ -3,18 +3,28 @@ using namespace std;
 
 class SimilarityChecker
 {
+private:
+    string A;
+    string B;
+    int lenA;
+    int lenB;
 public:
-    int Check(string A, string B)
+    void SetCheckTarget(string A, string B)
     {
-        return Check1_Length(A, B) + Check2_Alphabet(A, B);
+        this->A = A;
+        this->B = B;
+        lenA = (int)A.length();
+        lenB = (int)B.length();
+    }
+    int Check()
+    {
+        return Check1_Length() + Check2_Alphabet();
     }
 
-    int Check1_Length(string A, string B)
+    int Check1_Length()
     {
-        int lenA = A.length();
-        int lenB = B.length();
         if (lenA == lenB) return 60;
-        if (lenA == 0 || lenB == 0) return 0;
+        if (lenA == 0 || lenB == 0) return 0; // Avoid Divide By zero
 
         int result; // = (1 - (lenLong - lenShort) / lenShort) * 60
         if (lenA >= lenB)
@@ -30,7 +40,7 @@ public:
         return result;
     }
 
-    int Check2_Alphabet(string A, string B)
+    int Check2_Alphabet()
     {
         return 0;
     }
