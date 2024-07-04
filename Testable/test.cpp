@@ -17,6 +17,10 @@ public:
     {
         EXPECT_EQ(sc.Check1_Length(), Expected);
     }
+    void Check2AlphaIsExpectedTo(int Expected)
+    {
+        EXPECT_EQ(sc.Check2_Alphabet(), Expected);
+    }
 };
 
 TEST_F(SimCheckFixture, TcCheck1LengthIsEmptyBoth)
@@ -59,4 +63,53 @@ TEST_F(SimCheckFixture, TcCheck1LengthIsSame)
 {
     SetCheckTarget("ZSDFASGRSRG", "ABCDFGHIJKL");
     Check1LengthIsExpectedTo(60);
+}
+
+TEST_F(SimCheckFixture, TcCheck2AlphaIsEmptyBoth)
+{
+    SetCheckTarget("", "");
+    Check2AlphaIsExpectedTo(0);
+}
+
+TEST_F(SimCheckFixture, TcCheck2AlphaIsEmpty1)
+{
+    SetCheckTarget("ABC", "");
+    Check2AlphaIsExpectedTo(0);
+}
+
+TEST_F(SimCheckFixture, TcCheck2AlphaIsNotLetter)
+{
+    SetCheckTarget("ABC ", "123");
+    Check2AlphaIsExpectedTo(0);
+}
+
+TEST_F(SimCheckFixture, TcCheck2AlphaIsDiff1)
+{
+    SetCheckTarget("ABC", "A");
+    Check2AlphaIsExpectedTo(13);
+}
+
+TEST_F(SimCheckFixture, TcCheck2AlphaIsDiff2)
+{
+    SetCheckTarget("ABC", "BCC");
+    Check2AlphaIsExpectedTo(26);
+}
+
+TEST_F(SimCheckFixture, TcCheck2AlphaIsDiff3)
+{
+    SetCheckTarget("ABCASIOGRG", "ASIGJAISROL");
+    Check2AlphaIsExpectedTo(24);
+}
+
+TEST_F(SimCheckFixture, TcCheck2AlphaIsDiff4)
+{
+    SetCheckTarget("ABCDEFGHIJ", "JASABCDEFGH");
+    Check2AlphaIsExpectedTo(32);
+}
+
+
+TEST_F(SimCheckFixture, TcCheck2AlphaIsSame)
+{
+    SetCheckTarget("ABCDEFGHISJ", "JIASABCDEFGH");
+    Check2AlphaIsExpectedTo(40);
 }
