@@ -3,11 +3,6 @@ using namespace std;
 
 class SimilarityChecker
 {
-private:
-    string A;
-    string B;
-    int lenA;
-    int lenB;
 public:
     void SetCheckTarget(string A, string B)
     {
@@ -44,4 +39,10 @@ public:
     {
         return 0;
     }
+
+private:
+    string A;
+    string B;
+    int lenA;
+    int lenB;
 };
