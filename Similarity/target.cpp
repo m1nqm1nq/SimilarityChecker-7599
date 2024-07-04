@@ -19,7 +19,8 @@ public:
     int Check1_Length()
     {
         if (lenA == lenB) return 60;
-        if (lenA == 0 || lenB == 0) return 0; // Avoid Divide By zero
+        if (lenA >= lenB * 2) return 0;
+        if (lenB >= lenA * 2) return 0;
 
         int result; // = (1 - (lenLong - lenShort) / lenShort) * 60
         if (lenA >= lenB)
@@ -31,7 +32,6 @@ public:
             result = (lenA * 2 - lenB) * 60 / lenA;
         }
 
-        if (result < 0) return 0;
         return result;
     }
 
